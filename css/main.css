@@ -1,0 +1,31 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  z-index: 1;
+  flex-direction: row;
+}
+
+#not {
+  background-color: #880606;
+}
+
+#hot {
+  background-color: #068806;
+  padding-right: 30vw;
+}
+
+.choice {
+  display: flex;
+  width: 50vw;
+  height: 100vh;
+}
+
+.choice p {
+  align-self: center;
+}
