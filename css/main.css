@@ -1,31 +1,71 @@
 * {
-  padding: 0;
-  margin: 0;
+    padding: 0;
+    margin: 0;
 }
 
 body {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  z-index: 1;
-  flex-direction: row;
-}
-
-#not {
-  background-color: #880606;
-}
-
-#hot {
-  background-color: #068806;
-  padding-right: 30vw;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    z-index: 1;
+    flex-direction: row;
 }
 
 .choice {
-  display: flex;
-  width: 50vw;
-  height: 100vh;
+    align-self: center;
+    width: 50vw;
+    height: 100vh;
 }
 
 .choice p {
-  align-self: center;
+    font-size: 8vw;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#not {
+    background-color: #880606;
+}
+
+#hot {
+    background-color: #068806;
+}
+
+#hot p {
+    position: absolute;
+    right: 10%;
+}
+
+#not p {
+    position: absolute;
+    left: 10%;
+}
+
+#songCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(195, 192, 193, 0.5);
+    z-index: 2;
+    width: 40vw;
+    max-height: 60vh;
+    padding: 4vh 3vw;
+}
+
+#coverArt {
+    width: auto;
+    height: 100%;
+    max-width: 80%;
+    max-height: 50%;
+    overflow: hidden;
+}
+
+#coverArt img {
+    max-height: 100%;
+    max-width: 100%;
 }
