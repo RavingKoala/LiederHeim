@@ -17,7 +17,6 @@ function startAPI() {
   refresh_token = params.refresh_token;
   error = params.error;
 
-
   function getSong(access_token, songId) {
     $.ajax({
       url: 'https://api.spotify.com/v1/tracks/' + songId,
@@ -25,15 +24,8 @@ function startAPI() {
         'Authorization': 'Bearer ' + access_token
       },
       success: function(response) {
-        var coverArtImage = document.getElementById("coverArtImage"),
-          namefield = document.getElementById("nameField"),
-          artistField = document.getElementById("artistField");
-        artistField.innerHTML = "";
-        coverArtImage.src = response["album"]["images"][0]["url"];
-        namefield.innerHTML = response["name"];
-        for (var i in response["artists"]) {
-          artistField.innerHTML += response["artists"][i]["name"] + " ";
-        }
+        var songEmbed = document.getElementById("songEmbed");
+        songEmbed.src = "https://open.spotify.com/embed/track/" + response["id"];
       }
     });
   }
