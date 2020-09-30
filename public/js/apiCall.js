@@ -1,4 +1,4 @@
-(function() {
+function startAPI() {
   /**
    * Obtains parameters from the hash of the URL
    * @return Object
@@ -25,12 +25,10 @@
         'Authorization': 'Bearer ' + access_token
       },
       success: function(response) {
-        console.log(response);
         var coverArtImage = document.getElementById("coverArtImage"),
           namefield = document.getElementById("nameField"),
           artistField = document.getElementById("artistField");
         artistField.innerHTML = "";
-        console.log(response["album"]["images"][0]["url"]);
         coverArtImage.src = response["album"]["images"][0]["url"];
         namefield.innerHTML = response["name"];
         for (var i in response["artists"]) {
@@ -48,7 +46,6 @@
       }
     }).done(function(data) {
       access_token = data.access_token;
-      console.log();
     });
   }
 
@@ -81,4 +78,4 @@
       prevSong(access_token);
     });
   }
-})();
+}

@@ -1,17 +1,18 @@
 (function() {
   $.ajax({
     url: '/database_connection',
-  }).done(function(data) {
-    console.log(data.URL);
-  });
-
-  $.ajax({
-    url: '/insert_vote',
-    data: {
-      'songID': '1',
-      'vote': 1
+  }).done(function() {
+    console.log("connected");
+    if (!songs.length > 0) {
+      $.ajax({
+        url: '/get_songIDs',
+      }).done(function(data) {
+        songs = data;
+        startAPI();
+      });
+    } else {
+      startAPI();
     }
-  }).done(function(data) {
-    console.log(data.URL);
+
   });
 })();

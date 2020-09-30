@@ -15,7 +15,7 @@ var cookieParser = require('cookie-parser');
 var mysql = require('mysql');
 
 var client_id = 'bcec74fa643445e290accc5eaef02b49'; // Your client id
-var client_secret = ''; // Your secret
+var client_secret = 'c7fb4dcb897f4a5a9d0acbb5ef0a5e44'; // Your secret
 var redirect_uri = 'http://localhost:8888/callback/'; // Your redirect uri
 
 var stateKey = 'spotify_auth_state';
@@ -149,27 +149,29 @@ app.get('/database_connection', function(req, res) {
   // only try to open connection when no connection is currently open
   if (conn.state == 'disconnected') {
     // open a connection with the database
-    conn.connect((err) => {
-      if (err) {
-        throw err;
-      } else {
-        console.log("connected");
-      }
-    });
-
-    // retrieve all the songs in random order
-    conn.query("SELECT * FROM songs ORDER BY RAND()", (err, result, fields) => {
-      if (err) throw err;
-      console.log(result);
+    conn.connect(function(err) {
+      if (err) console.log(err);
     });
   }
+  res.send("success");
 });
+
+app.get('/get_songIDs', function(req, res) {
+  // retrieve all the songs in random order
+  conn.query("SELECT SongID FROM songs ORDER BY RAND()", function(err, result, fields) {
+    if (err) console.log(err);
+    var songIdArray = [];
+    for (var id = 0; id < result.length; id++) {
+      songIdArray.push(result[id].SongID);
+    }
+    res.send(songIdArray);
+  });
+})
 
 app.get('/insert_vote', function(req, res) {
   // insert vote into the database
-  conn.query("INSERT INTO votes (SongID, VotedHot) VALUES (\"1\", 1)", (err, result, fields) => {
-    if (err) throw err;
-    console.log(result);
+  conn.query("INSERT INTO votes (SongID, VotedHot) VALUES (\"1\", 1)", function(err, result, fields) {
+    if (err) console.log(err);
   });
 });
 
