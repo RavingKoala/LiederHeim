@@ -1,37 +1,38 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
-<head>
-	<meta charset="utf-8">
-	<link rel="stylesheet" href="css/main.css">
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-	<script type="text/javascript">
-		var songs = [],
-			songIndex = 0;
-		var access_token,
-			refresh_token,
-			error;
-	</script>
-	<title>Main</title>
-</head>
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+		<script type="text/javascript">
+			var songs = [],
+				songIndex = 0;
+			var access_token,
+				refresh_token,
+				error;
 
-<body>
-	<div class="choice" id="not">
-		<p>not</p>
-	</div>
-	<div class="choice" id="hot">
-		<p>hot</p>
-	</div>
-	<div id="songCard">
-		<iframe id="songEmbed" src="https://open.spotify.com/embed/track/3skA58VBN30bJMtzH1ROGt" width="800" height="550" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-	</div>
-	<button type="button" id="prevSong"> &lt;&lt; </button>
-	<button type="button" id="nextSong"> &gt;&gt; </button>
-	<button style="display:none;" class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token </button>
-</body>
-<script src="js/apiCall.js" charset="utf-8"></script>
-<script src="js/database_communication.js" charset="utf-8"></script>
+		</script>
+		<title>Main</title>
+	</head>
+
+	<body>
+		<div class="choice" id="not">
+			<p>not</p>
+		</div>
+		<div class="choice" id="hot">
+			<p>hot</p>
+		</div>
+		<div id="songCard">
+			<iframe id="songEmbed" src="https://open.spotify.com/embed/track/3skA58VBN30bJMtzH1ROGt" width="800" height="550" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+		</div>
+		<button type="button" id="prevSong"> &lt;&lt; </button>
+		<button type="button" id="nextSong"> &gt;&gt; </button>
+		<button style="display:none;" class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token </button>
+	</body>
+	<script src="js/apiCall.js" charset="utf-8"></script>
+	<script src="js/database_communication.js" charset="utf-8"></script>
 
 </html>
