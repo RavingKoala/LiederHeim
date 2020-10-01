@@ -1,6 +1,7 @@
 * {
     padding: 0;
     margin: 0;
+    font-family: "fira sans"
 }
 
 body {
@@ -12,15 +13,19 @@ body {
 }
 
 .choice {
+    transition: 0.4s;
     align-self: center;
     width: 50vw;
     height: 100vh;
 }
 
 .choice p {
+    color: #000;
     font-size: 8vw;
     top: 50%;
     transform: translateY(-50%);
+    cursor: default;
+    user-select: none;
 }
 
 #not {
@@ -29,6 +34,14 @@ body {
 
 #hot {
     background-color: #068806;
+}
+
+#not:hover {
+    background-color: #EB0A0A;
+}
+
+#hot:hover {
+    background-color: #0AEB0A;
 }
 
 #hot p {
@@ -52,9 +65,30 @@ body {
     transform: translate(-50%, -50%);
     /* background-color: rgba(195, 192, 193, 0.5); */
     z-index: 2;
-    width: 60vw;
-    max-height: 60vh;
-    padding: 4vh 3vw;
+    max-width: 54vw;
+    max-height: 52vh;
+}
+
+#endCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* background-color: rgba(195, 192, 193, 0.5); */
+    z-index: 2;
+    max-width: 54vw;
+    max-height: 52vh;
+    min-width: 20vw;
+    min-height: 20vh;
+    background-color: #ffffff;
+    border: 3px solid black;
+    box-shadow: 3px 3px 16px black;
+    display: none;
+    padding: 2vh 2vw;
 }
 
 #songEmbed {

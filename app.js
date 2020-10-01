@@ -170,9 +170,14 @@ app.get('/get_songIDs', function(req, res) {
 
 app.get('/insert_vote', function(req, res) {
     // insert vote into the database
-    conn.query("INSERT INTO votes (SongID, VotedHot) VALUES (\"1\", 1)", function(err, result, fields) {
-        if (err) console.log(err);
+    var id = req.query.songId;
+    var vote = req.query.isHot;
+    conn.query("INSERT INTO votes (SongID, VotedHot) VALUES (\"" + id + "\", " + vote + ")", function(err, result, fields) {
+        if (err) {
+            res.send("");
+        };
     });
+    res.send("success");
 });
 
 console.log('Listening on 8888');
