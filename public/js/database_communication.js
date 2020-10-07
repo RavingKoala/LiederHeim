@@ -1,8 +1,8 @@
 (function() {
     $.ajax({
         url: '/database_connection',
-    }).done(function() {
-        console.log("connected");
+    }).done(function(response) {
+        console.log(response);
         if (!songs.length > 0) {
             $.ajax({
                 url: '/get_songIDs',
@@ -13,6 +13,5 @@
         } else {
             startAPI();
         }
-
     });
 })();

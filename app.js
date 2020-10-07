@@ -1,12 +1,3 @@
-/**
- * This is an example of a basic node.js script that performs
- * the Authorization Code oAuth2 flow to authenticate against
- * the Spotify Accounts.
- *
- * For more information, read
- * https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow
- */
-
 var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
 var cors = require('cors');
@@ -14,9 +5,9 @@ var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 var mysql = require('mysql');
 
-var client_id = 'bcec74fa643445e290accc5eaef02b49'; // Your client id
-var client_secret = 'c7fb4dcb897f4a5a9d0acbb5ef0a5e44'; // Your secret
-var redirect_uri = 'http://localhost:8888/callback/'; // Your redirect uri
+var client_id = '1bce4a2558cb436da9a2848ccfefa9fe'; // Your client id
+var client_secret = '738fea8d41dd4de7a70605eda1642785'; // Your secret
+var redirect_uri = 'http://h2906768.stratoserver.net/callback/'; // Your redirect uri
 
 var stateKey = 'spotify_auth_state';
 
@@ -39,17 +30,16 @@ var app = express();
 
 var conn = mysql.createConnection({
     host: "localhost",
-    user: "root",
-    password: "",
-    database: "Liederheim"
+    user: "liederheim",
+    password: "lf32Qx^8",
+    database: "liederheim"
 });
-
+							   
 app.use(express.static(__dirname + '/public'))
     .use(cors())
     .use(cookieParser());
 
 app.get('/login', function(req, res) {
-
     var state = generateRandomString(16);
     res.cookie(stateKey, state);
 
@@ -150,23 +140,25 @@ app.get('/database_connection', function(req, res) {
     if (conn.state == 'disconnected') {
         // open a connection with the database
         conn.connect(function(err) {
-            if (err) console.log(err);
+            if (err) res.send(err);
+		    res.send("success");
         });
-    }
-    res.send("success");
+    } else {
+		res.send("already open");
+	}
 });
 
 app.get('/get_songIDs', function(req, res) {
     // retrieve all the songs in random order
     conn.query("SELECT SongID FROM songs ORDER BY RAND()", function(err, result, fields) {
-        if (err) console.log(err);
+        if (err) res.send(err);
         var songIdArray = [];
         for (var id = 0; id < result.length; id++) {
             songIdArray.push(result[id].SongID);
         }
         res.send(songIdArray);
     });
-})
+});
 
 app.get('/insert_vote', function(req, res) {
     // insert vote into the database
@@ -180,5 +172,4 @@ app.get('/insert_vote', function(req, res) {
     res.send("success");
 });
 
-console.log('Listening on 8888');
-app.listen(8888);
+app.listen(3000);

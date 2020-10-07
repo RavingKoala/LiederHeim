@@ -17,6 +17,8 @@ function startAPI() {
     refresh_token = params.refresh_token;
     error = params.error;
 
+    var allowedVote = true;
+
 
     function getNewToken(refresh_token) {
         $.ajax({
@@ -30,6 +32,7 @@ function startAPI() {
     }
 
     function getSong(access_token, songId) {
+		console.log("get song");
         $.ajax({
             url: 'https://api.spotify.com/v1/tracks/' + songId,
             headers: {
@@ -106,10 +109,22 @@ function startAPI() {
         }
 
         document.getElementById('hot').addEventListener("click", function() {
-            doVote("1");
+            if (allowedVote) {
+                allowedVote = false;
+                doVote("1");
+                setTimeout(function() {
+                    allowedVote = true
+                }, 1500);
+            }
         });
         document.getElementById('not').addEventListener("click", function() {
-            doVote("0");
+            if (allowedVote) {
+                allowedVote = false;
+                doVote("0");
+                setTimeout(function() {
+                    allowedVote = true
+                }, 1500);
+            }
         });
     }
 }
