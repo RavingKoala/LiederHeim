@@ -1,52 +1,19 @@
 function startAPI() {
-    /**
-     * Obtains parameters from the hash of the URL
-     * @return Object
-     */
-    function getHashParams() {
-        var hashParams = {};
-        var e, r = /([^&;=]+)=?([^&;]*)/g,
-            q = window.location.hash.substring(1);
-        while (e = r.exec(q)) {
-            hashParams[e[1]] = decodeURIComponent(e[2]);
-        }
-        return hashParams;
-    }
-    var params = getHashParams();
-    access_token = params.access_token;
-    refresh_token = params.refresh_token;
-    error = params.error;
 
     var allowedVote = true;
 
 
-    function getNewToken(refresh_token) {
+    function getSong(songId) {
         $.ajax({
-            url: '/refresh_token',
-            data: {
-                'refresh_token': refresh_token
-            }
+            url: '/getSpotifySong/?songId=' + songId
         }).done(function(data) {
-            access_token = data.access_token;
-        });
-    }
-
-    function getSong(access_token, songId) {
-		console.log("get song");
-        $.ajax({
-            url: 'https://api.spotify.com/v1/tracks/' + songId,
-            headers: {
-                'Authorization': 'Bearer ' + access_token
-            },
-            success: function(response) {
-                var songEmbed = document.getElementById("songEmbed");
-                songEmbed.src = "https://open.spotify.com/embed/track/" + response["id"];
-            }
+            var songEmbed = document.getElementById("songEmbed");
+            songEmbed.src = "https://open.spotify.com/embed/track/" + data["id"];
         }).fail(function() {
             console.log("FAILLLLLL BITCH");
-            getNewToken();
         });
     }
+    getSong(songs[songIndex]);
 
     function endVoting() {
         document.getElementById('hot').style.display = "none";
@@ -56,10 +23,10 @@ function startAPI() {
         document.getElementById('endCard').style.display = "block";
     }
 
-    function nextSong(access_token) {
+    function nextSong() {
         if (songIndex + 1 <= songs.length - 1) {
             songIndex += 1;
-            getSong(access_token, songs[songIndex]);
+            getSong(songs[songIndex]);
         } else {
             endVoting();
         }
@@ -92,39 +59,29 @@ function startAPI() {
         }).done(function(data) {
             if (data == "success") {
                 fadeOut(isHot);
-                nextSong(access_token);
+                nextSong();
             }
         }).fail(function() {
             return false;
         });
     }
 
-    if (error) {
-        alert('There was an error during the api authentication');
-    } else {
-        if (access_token) {
-            getSong(access_token, songs[songIndex]);
-        } else {
-            window.location.replace("/login");
+    document.getElementById('hot').addEventListener("click", function() {
+        if (allowedVote) {
+            allowedVote = false;
+            doVote("1");
+            setTimeout(function() {
+                allowedVote = true
+            }, 1500);
         }
-
-        document.getElementById('hot').addEventListener("click", function() {
-            if (allowedVote) {
-                allowedVote = false;
-                doVote("1");
-                setTimeout(function() {
-                    allowedVote = true
-                }, 1500);
-            }
-        });
-        document.getElementById('not').addEventListener("click", function() {
-            if (allowedVote) {
-                allowedVote = false;
-                doVote("0");
-                setTimeout(function() {
-                    allowedVote = true
-                }, 1500);
-            }
-        });
-    }
+    });
+    document.getElementById('not').addEventListener("click", function() {
+        if (allowedVote) {
+            allowedVote = false;
+            doVote("0");
+            setTimeout(function() {
+                allowedVote = true
+            }, 1500);
+        }
+    });
 }
